@@ -2217,15 +2217,7 @@ footer {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;
-}
-
-@keyframes spin-button {
-    0% { transform: translateY(0) rotate(0deg); }
-    16% { transform: translateY(0) rotate(1080deg); } /* 3 оборота вправо */
-    50% { transform: translateY(0) rotate(1080deg); } /* Пауза */
-    66% { transform: translateY(0) rotate(0deg); }    /* 3 оборота влево */
-    100% { transform: translateY(0) rotate(0deg); }   /* Пауза */
-}
+}   
 
 .scroll-to-top.visible {
     opacity: 1;
