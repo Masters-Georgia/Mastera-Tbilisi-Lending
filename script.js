@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollToTop();
     initClientLeadFormTracking();
     initMasterLeadFormTracking();
-    initTelegramButtonTracking();
+    initWhatsAppButtonTracking();
     initFAQ();
 });
 
