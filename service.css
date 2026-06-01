@@ -107,20 +107,112 @@
     margin-bottom: 1rem;
 }
 
+/* ============================================
+РАЙОНЫ ТБИЛИСИ — GRID-СЕТКА
+============================================ */
 .districts-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    justify-content: center;
+  display: grid;
+  /* 5 колонок = ровно 2 ряда для 10 районов */
+  grid-template-columns: repeat(5, 1fr); 
+  gap: 12px;
+  margin-top: 2rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-items: center;
+  align-items: center;
 }
 
 .district-tag {
-    background: rgba(0, 0, 0, 0.1);
-    border: 1px solid #FDB913;
-    color: #e5e5e5;
-    padding: 0.4rem 0.9rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
+  width: 130%; /* Одинаковая ширина */
+  min-height: 48px; /* Одинаковая высота */
+  padding: 12px 30px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(253, 185, 19, 0.2);
+  border-radius: 50px;
+  color: #ccc;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Текст по центру */
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  box-sizing: border-box;
+  white-space: nowrap; /* Запрет переноса текста */
+}
+
+/* Иконка локации */
+.district-tag::before {
+  content: '📍';
+  font-size: 1.1rem;
+  filter: grayscale(1);
+  transition: filter 0.3s ease;
+  flex-shrink: 0; /* Не сжимается */
+}
+
+.district-tag:hover {
+  background: rgba(253, 185, 19, 0.1);
+  border-color: var(--construction-yellow);
+  color: var(--construction-yellow);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(253, 185, 19, 0.2);
+}
+
+.district-tag:hover::before {
+  filter: grayscale(0);
+}
+
+/* Популярные районы (зелёный акцент) */
+.district-tag.popular {
+  border-color: rgba(6, 255, 165, 0.4);
+  background: rgba(6, 255, 165, 0.05);
+}
+
+.district-tag.popular:hover {
+  border-color: var(--safety-green);
+  box-shadow: 0 10px 25px rgba(6, 255, 165, 0.3);
+  color: var(--safety-green);
+}
+
+/* ============================================
+АДАПТИВ
+============================================ */
+/* Планшет/Мобильный: 1 колонка */
+@media (max-width: 768px) {
+  .districts-grid {
+    grid-template-columns: 1fr; /* Строго в один ряд */
+    gap: 10px;
+    max-width: 400px; /* Ограничиваем ширину на мобилке */
+  }
+  .district-tag {
+    padding: 14px 20px;
+    font-size: 1rem;
+    min-height: 52px;
+    /* ✅ ПОСТОЯННАЯ ПОДСВЕТКА (копия стилей .popular с десктопа) */
+    border-color: var(--construction-yellow);
+    border: 1px solid rgba(253, 185, 19, 0.2); /* 👈 делает обводку визуально тоньше */
+    color: var(--construction-yellow);
+  }
+  .district-tag::before {
+    filter: grayscale(0); /* Иконка  всегда цветная на мобильных */
+  }
+}
+
+/* Очень маленькие экраны */
+@media (max-width: 480px) {
+  .districts-grid {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+  .district-tag {
+    border-radius: 5px; /* Чуть менее скруглённые для компактности */
+  }
 }
 
 /* Хлебные крошки (скрыты визуально, но остаются в Schema.org) */
