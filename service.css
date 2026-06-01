@@ -200,6 +200,10 @@
   .districts {
     padding: 1.5rem 1rem;
     max-width: 100%;
+    border: none;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
   .districts-grid {
     grid-template-columns: 1fr;
