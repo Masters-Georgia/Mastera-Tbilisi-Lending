@@ -1939,7 +1939,7 @@ footer {
 
 .lang-btn {
     background: transparent;
-    border: 2px solid var(--construction-orange);
+    border: 1px solid rgba(253, 185, 19, 0.3);
     color: rgba(255, 255, 255, 0.6);
     padding: 0.5rem 1rem;
     border-radius: 20px;
