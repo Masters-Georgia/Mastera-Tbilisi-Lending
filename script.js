@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initOnlineCounter();
     initLanguageSwitcher();
     initTypingEffect();
+    initServiceTypingEffect();
     initModalForms();
     initScrollToTop();
     initClientLeadFormTracking();
@@ -790,6 +791,49 @@ function initTypingEffect() {
         await deleteText(parts.option1.length);
         await typeText(parts.option2);
         await wait(1000);
+        cursor.remove();
+    }
+
+    setTimeout(runAnimation, 500);
+}
+
+// ============================================
+// ЭФФЕКТ ПЕЧАТНОЙ МАШИНКИ ДЛЯ H1 НА СТРАНИЦАХ СЕРВИСА
+// ============================================
+
+function initServiceTypingEffect() {
+    const titleElement = document.querySelector('.service-title');
+    if (!titleElement) return;
+
+    const html = titleElement.innerHTML;
+    const parts = html.split(/<br\s*\/?>/i);
+    const line1 = parts[0] ? parts[0].trim() : '';
+    const line2 = parts[1] ? parts[1].trim() : '';
+
+    const typeSpeed = 180;
+
+    const cursor = document.createElement('span');
+    cursor.className = 'typing-cursor';
+    titleElement.innerHTML = '';
+    titleElement.appendChild(cursor);
+
+    const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+    async function typeText(text) {
+        for (let i = 0; i < text.length; i++) {
+            titleElement.insertBefore(document.createTextNode(text[i]), cursor);
+            await wait(typeSpeed);
+        }
+    }
+
+    async function runAnimation() {
+        await typeText(line1);
+        if (line2) {
+            const br = document.createElement('br');
+            titleElement.insertBefore(br, cursor);
+            await typeText(line2);
+        }
+        await wait(400);
         cursor.remove();
     }
 
