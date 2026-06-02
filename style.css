@@ -499,29 +499,31 @@ header {
 }
 
 .service-card-icon {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 1.2rem;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, rgba(253, 185, 19, 0.2), rgba(253, 185, 19, 0.05));
+    background: radial-gradient(circle at 30% 30%, rgba(253, 185, 19, 0.15), rgba(253, 185, 19, 0.05));
     border: 3px solid var(--construction-yellow);
-    box-shadow: 0 0 25px rgba(253, 185, 19, 0.2);
+    box-shadow: 0 0 30px rgba(253, 185, 19, 0.3), inset 0 0 20px rgba(253, 185, 19, 0.1);
     transition: all 0.4s ease;
     flex-shrink: 0;
+    animation: icon-pulse 3s ease-in-out infinite;
 }
 
 .service-card:hover .service-card-icon {
-    transform: scale(1.1);
-    box-shadow: 0 0 40px rgba(253, 185, 19, 0.4);
+    transform: scale(1.1) rotate(-5deg);
+    box-shadow: 0 0 50px rgba(253, 185, 19, 0.6), inset 0 0 30px rgba(253, 185, 19, 0.2);
+    border-color: rgba(253, 185, 19, 1);
 }
 
 .service-card-icon svg {
-    width: 36px;
-    height: 36px;
-    color: var(--construction-yellow);
+    width: 60px;
+    height: 60px;
+    color: white;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
@@ -654,6 +656,7 @@ header {
     height: 60px;
     position: relative;
     z-index: 2;
+    color: white;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
@@ -967,28 +970,30 @@ header {
 }
 
 .step-icon {
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     margin: 0 auto 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, rgba(253, 185, 19, 0.2), rgba(253, 185, 19, 0.05));
+    background: radial-gradient(circle at 30% 30%, rgba(253, 185, 19, 0.15), rgba(253, 185, 19, 0.05));
     border: 3px solid var(--construction-yellow);
-    box-shadow: 0 0 30px rgba(253, 185, 19, 0.3);
+    box-shadow: 0 0 30px rgba(253, 185, 19, 0.3), inset 0 0 20px rgba(253, 185, 19, 0.1);
     transition: all 0.4s ease;
+    animation: icon-pulse 3s ease-in-out infinite;
 }
 
 .step-card:hover .step-icon {
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 0 50px rgba(253, 185, 19, 0.5);
+    transform: scale(1.1) rotate(-5deg);
+    box-shadow: 0 0 50px rgba(253, 185, 19, 0.6), inset 0 0 30px rgba(253, 185, 19, 0.2);
+    border-color: rgba(253, 185, 19, 1);
 }
 
 .step-icon svg {
-    width: 40px;
-    height: 40px;
-    color: var(--construction-yellow);
+    width: 60px;
+    height: 60px;
+    color: white;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
@@ -1513,8 +1518,8 @@ footer {
     }
     
     .section-icon {
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
     }
     
     .section-icon svg {
@@ -1790,13 +1795,13 @@ footer {
     }
     
     .step-icon {
-        width: 70px;
-        height: 70px;
+        width: 80px;
+        height: 80px;
     }
     
     .step-icon svg {
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
     }
     
     .testimonials-container {
@@ -1815,8 +1820,8 @@ footer {
     }
     
     .faq-icon {
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
         font-size: 1.2rem;
     }
     
@@ -2031,8 +2036,8 @@ footer {
 }
 
 .thank-you-icon {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     margin: 0 auto 2rem;
     display: flex;
     align-items: center;
@@ -2430,5 +2435,23 @@ footer {
     .scroll-to-top svg {
         width: 18px;
         height: 18px;
+    }
+}
+
+/* ============================================
+   УНИФИКАЦИЯ ИКОНОК НА МОБИЛЬНЫХ
+   ============================================ */
+@media (max-width: 1200px) {
+    .section-icon,
+    .service-card-icon,
+    .step-icon {
+        width: 80px !important;
+        height: 80px !important;
+    }
+    .section-icon svg,
+    .service-card-icon svg,
+    .step-icon svg {
+        width: 40px !important;
+        height: 40px !important;
     }
 }
