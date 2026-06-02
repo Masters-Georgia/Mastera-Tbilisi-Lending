@@ -345,6 +345,14 @@ header {
     min-height: 2.6em;
 }
 
+@media (min-width: 769px) {
+    .hero-title {
+        max-width: 648px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
 /* Курсор для эффекта печатной машинки */
 .typing-cursor {
     display: inline-block;
