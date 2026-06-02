@@ -145,6 +145,8 @@
     font-weight: 700;
     color: var(--construction-yellow);
     margin-bottom: 0.3rem;
+    position: relative;
+    z-index: 1;
 }
 
 /* ============================================
