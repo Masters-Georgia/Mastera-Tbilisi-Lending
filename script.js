@@ -80,8 +80,9 @@ function initStatsAnimation() {
                 const element = entry.target;
                 const target = parseInt(element.dataset.target, 10);
                 const suffix = element.dataset.suffix || '';
+                const startVal = parseInt(element.dataset.start, 10) || 0;
                 element.dataset.animated = 'true';
-                animateCounter(element, target, 2500, suffix);
+                animateCounter(element, target, 2500, suffix, startVal);
                 observer.unobserve(element);
             }
         });
@@ -103,18 +104,21 @@ function initStatsAnimation() {
     });
 }
 
-function animateCounter(element, target, duration, suffix) {
+function animateCounter(element, target, duration, suffix, start) {
+    start = start || 0;
+    const range = target - start;
+    const isReverse = start > target;
     const startTime = performance.now();
 
-    function easeOutQuint(t) {
-        return 1 - Math.pow(1 - t, 5);
+    function ease(t) {
+        return isReverse ? t : (1 - Math.pow(1 - t, 5));
     }
 
     function animate(currentTime) {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        const easedProgress = easeOutQuint(progress);
-        const current = Math.floor(easedProgress * target);
+        const easedProgress = ease(progress);
+        const current = Math.floor(start + easedProgress * range);
         element.textContent = current + suffix;
         if (progress < 1) {
             requestAnimationFrame(animate);
@@ -670,10 +674,17 @@ function initWhatsAppButtonTracking() {
     if (!whatsappButton) return;
 
     // Тексты сообщений для WhatsApp
+    const isMastersPage = window.location.pathname.includes('/masters/');
     const waTexts = {
-        ru: encodeURIComponent('Здравствуйте! Нужен мастер в Тбилиси.'),
-        ka: encodeURIComponent('გამარჯობა! მჭირდება ოსტატი თბილისში.'),
-        en: encodeURIComponent('Hello! I need a handyman in Tbilisi.')
+        ru: encodeURIComponent(isMastersPage
+            ? 'Здравствуйте! Хочу стать партнёром сервиса.'
+            : 'Здравствуйте! Нужен мастер в Тбилиси.'),
+        ka: encodeURIComponent(isMastersPage
+            ? 'გამარჯობა! მინდა გავხდე პარტნიორი.'
+            : 'გამარჯობა! მჭირდება ოსტატი თბილისში.'),
+        en: encodeURIComponent(isMastersPage
+            ? 'Hello! I want to become a partner.'
+            : 'Hello! I need a handyman in Tbilisi.')
     };
     const lang = window.__FORCE_LANG__ || 'ru';
     const waText = waTexts[lang] || waTexts.ru;
@@ -718,6 +729,8 @@ function initTypingEffect() {
     const titleElement = document.querySelector('.hero-title');
     if (!titleElement) return;
 
+    const isMastersPage = window.location.pathname.includes('/masters/');
+
     const textParts = {
         ru: {
             start:   'Сервис ',
@@ -733,10 +746,26 @@ function initTypingEffect() {
             start:   'სერვისი ',
             option1: 'ძიების თბილისში',
             option2: 'შერჩევის თბილისში'
+        },
+        ru_masters: {
+            start:   'Сервис ',
+            option1: 'поиска заказов Тбилиси',
+            option2: 'подбора заказов Тбилиси'
+        },
+        en_masters: {
+            start:   'Order ',
+            option1: 'search service Tbilisi',
+            option2: 'matching service Tbilisi'
+        },
+        ka_masters: {
+            start:   'შეკვეთების ',
+            option1: 'ძიების სერვისი თბილისში',
+            option2: 'შერჩევის სერვისი თბილისში'
         }
     };
 
-    const parts = textParts[currentLang] || textParts.ru;
+    const langKey = isMastersPage ? currentLang + '_masters' : currentLang;
+    const parts = textParts[langKey] || textParts[currentLang] || textParts.ru;
 
     const typeSpeed  = 180;
     const deleteSpeed = 50;

@@ -717,7 +717,7 @@ header {
     font-size: 2.5rem;
     font-weight: 500;
     margin-bottom: 1rem;
-    color: var(--construction-yellow);
+    color: #d0d0d0;
     flex-shrink: 0;
 }
 
@@ -726,7 +726,7 @@ header {
     font-size: 1rem;
     font-weight: 600;
     margin-bottom: 2rem;
-    color: var(--safety-green);
+    color: var(--construction-yellow);
 }
 
 /* ============================================
@@ -898,7 +898,7 @@ header {
     font-weight: 900;
     text-align: center;
     margin-bottom: 1rem;
-    color: var(--construction-yellow);
+    color: #d0d0d0;
 }
 
 .section-subtitle {
@@ -906,7 +906,7 @@ header {
     font-size: clamp(1rem, 1.5vw, 1.3rem);
     font-weight: 500;
     text-align: center;
-    color: var(--safety-green);
+    color: var(--construction-yellow);
     margin-bottom: 4rem;
     letter-spacing: 0.5px;
 }
