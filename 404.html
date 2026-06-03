@@ -9,6 +9,19 @@
   <link rel="icon" type="image/svg+xml" href="image/favicon.svg">
   <link rel="icon" type="image/x-icon" href="image/favicon.ico">
 
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7SLML317LT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7SLML317LT');
+    gtag('event', 'page_not_found', {
+      page_location: window.location.href,
+      page_referrer: document.referrer
+    });
+  </script>
+
   <style>
     @font-face {
       font-family: 'Montserrat';
