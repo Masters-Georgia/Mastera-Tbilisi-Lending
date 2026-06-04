@@ -464,6 +464,59 @@ function validateForm(e) {
 // 10. ЛИД-ФОРМА КЛИЕНТА
 // ============================================
 
+// URL прокси-воркера (Cloudflare Worker), который добавляет секрет и пересылает в бота.
+// ⚠️ Сюда НЕ вставляйте WEBHOOK_SECRET — он живёт только внутри воркера.
+const BOT_PROXY_URL = 'https://REPLACE-WITH-YOUR-WORKER.workers.dev';
+
+// Район на сайте выбирается слугами (Vake, Saburtalo...), а бот ждёт названия по-русски.
+const BOT_DISTRICT_MAP = {
+    Vake: 'Ваке', Saburtalo: 'Сабуртало', Didube: 'Дидубе', Chugureti: 'Чугурети',
+    Isani: 'Исани', Samgori: 'Самгори', Gldani: 'Глдани', Nadzaladevi: 'Надзаладеви',
+    Other: 'Другой'
+};
+
+// Отправка клиентской заявки в Telegram-бота через прокси.
+// Не блокирует пользователя и не зависит от ответа — заявка в любом случае уйдёт на email.
+function sendLeadToBot(formData) {
+    try {
+        const get = (k) => (formData.get(k) || '').toString().trim();
+
+        const phone    = get('phone');
+        const telegram = get('telegram');
+        const whatsapp = get('whatsapp');
+        const name     = get('name');
+
+        // Контакты — откроются мастеру ТОЛЬКО после взятия заявки и списания.
+        const contactParts = [];
+        if (phone)    contactParts.push(phone);
+        if (telegram) contactParts.push('Telegram: ' + telegram);
+        if (whatsapp) contactParts.push('WhatsApp: ' + whatsapp);
+
+        // Что видят мастера СРАЗУ (в превью, до взятия): имя + задача, без контактов.
+        const descParts = [];
+        if (name) descParts.push('Имя: ' + name);
+        descParts.push('Задача: ' + (get('message') || '—'));
+
+        const payload = {
+            district:    BOT_DISTRICT_MAP[get('district')] || get('district') || 'Другой',
+            subdistrict: 'Не указан',                       // в форме нет подрайона
+            category:    get('service') || 'Другое',
+            description: descParts.join('\n'),              // имя + задача → видно в превью
+            address:     'Не указан',                       // в форме нет адреса
+            contact:     contactParts.join(', ') || 'Нет контакта' // скрыто до оплаты
+        };
+
+        fetch(BOT_PROXY_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            keepalive: true
+        }).catch(() => {}); // молча игнорируем — на email заявка всё равно уходит
+    } catch (e) {
+        console.error('sendLeadToBot error:', e);
+    }
+}
+
 function initClientLeadFormTracking() {
     const leadForm = document.getElementById('clientLeadForm');
     if (!leadForm) return;
@@ -479,6 +532,9 @@ function initClientLeadFormTracking() {
 
         const formData = new FormData(leadForm);
         const transactionId = 'client_' + Date.now();
+
+        // Дублируем заявку в Telegram-бота (fire-and-forget, не влияет на отправку на email)
+        sendLeadToBot(formData);
 
         try {
             const response = await fetch('https://formspree.io/f/xpqjbpyk', {
