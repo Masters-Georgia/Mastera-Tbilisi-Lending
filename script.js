@@ -492,9 +492,9 @@ function sendLeadToBot(formData) {
 
         // Контакты — откроются мастеру ТОЛЬКО после взятия заявки и списания.
         const contactParts = [];
-        if (phone)    contactParts.push(phone);
-        if (telegram) contactParts.push('Telegram: ' + telegram);
-        if (whatsapp) contactParts.push('WhatsApp: ' + whatsapp);
+        if (phone)    contactParts.push('📱 ' + phone);
+        if (telegram) contactParts.push('✈️ Telegram: ' + telegram);
+        if (whatsapp) contactParts.push('🟢 WhatsApp: ' + whatsapp);
 
         // Что видят мастера СРАЗУ (в превью, до взятия): имя + задача, без контактов.
         const descParts = [];
@@ -507,7 +507,7 @@ function sendLeadToBot(formData) {
             category:    get('service') || 'Другое',
             description: descParts.join('\n'),              // имя + задача → видно в превью
             address:     'Не указан',                       // в форме нет адреса
-            contact:     contactParts.join(', ') || 'Нет контакта', // скрыто до оплаты
+            contact:     contactParts.join('\n') || 'Нет контакта', // скрыто до оплаты
             honeypot:    get('_gotcha')                     // антиспам: люди это поле не заполняют
         };
 
