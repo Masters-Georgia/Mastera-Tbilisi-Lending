@@ -1082,7 +1082,7 @@ function initWhatsAppButtonTracking() {
     const waHref = 'https://wa.me/995557645196?text=' + (waTexts[lang] || waTexts.ru);
 
     // Клиентский Telegram-бот по языку страницы (RU/EN/GE). start=site_<lang> — для атрибуции.
-    const tgBots = { ru: 'client_tbilisi_bot', en: 'mastera_en_bot', ka: 'mastera_ka_bot' };
+    const tgBots = { ru: 'mastera_ru_bot', en: 'mastera_en_bot', ka: 'mastera_ka_bot' };
     const tgHref = 'https://t.me/' + (tgBots[lang] || tgBots.ru) + '?start=site_' + lang;
 
     // Подписи (доступность/тултипы) по языку.
