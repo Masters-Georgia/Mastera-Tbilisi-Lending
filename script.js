@@ -503,6 +503,19 @@ const BOT_DISTRICT_MAP = {
     Krtsanisi: 'Крцаниси', Samgori: 'Самгори', Other: 'Другой'
 };
 
+// Категория работ в EN/GE формах выбирается на своём языке, а бот принимает только
+// канонические русские названия (specialties в config.yaml). Без этого маппинга
+// заявки с английской/грузинской форм бот отбраковывает (на email они всё равно уходят).
+// RU-значения уже канонические — проходят через fallback в sendLeadToBot без записи здесь.
+const BOT_SERVICE_MAP = {
+    // EN
+    Plumbing: 'Сантехника', Electrical: 'Электрика', Repair: 'Ремонт',
+    Furniture: 'Мебель', Movers: 'Грузчики', Cleaning: 'Клининг', Other: 'Другое',
+    // GE
+    'სანტექნიკა': 'Сантехника', 'ელექტრიკა': 'Электрика', 'რემონტი': 'Ремонт',
+    'ავეჯი': 'Мебель', 'მზიდვები': 'Грузчики', 'დასუფთავება': 'Клининг', 'სხვა': 'Другое'
+};
+
 // Отправка клиентской заявки в Telegram-бота через прокси.
 // Не блокирует пользователя и не зависит от ответа — заявка в любом случае уйдёт на email.
 function sendLeadToBot(formData) {
@@ -528,7 +541,7 @@ function sendLeadToBot(formData) {
         const payload = {
             district:    BOT_DISTRICT_MAP[get('district')] || get('district') || 'Другой',
             subdistrict: 'Не указан',                       // подрайон убрали — адрес точнее
-            category:    get('service') || 'Другое',
+            category:    BOT_SERVICE_MAP[get('service')] || get('service') || 'Другое',
             description: descParts.join('\n'),              // имя + задача → видно в превью
             address:     'Не указан',                       // адрес у клиента не спрашиваем — только район
             contact:     contactParts.join('\n') || 'Нет контакта', // скрыто до оплаты
