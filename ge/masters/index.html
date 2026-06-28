@@ -497,9 +497,9 @@
   (function () {
     var banner = document.getElementById('app-banner');
     var closeBtn = document.getElementById('app-banner-close');
-    if (localStorage.getItem('app_banner_master_dismissed')) return;
+    // Плашка показывается при КАЖДОЙ загрузке. Крестик скрывает её только до
+    // перезагрузки страницы (без запоминания в localStorage).
     closeBtn.addEventListener('click', function () {
-      localStorage.setItem('app_banner_master_dismissed', '1');
       banner.style.display = 'none';
     });
     setTimeout(function () { banner.style.display = 'block'; }, 1500);

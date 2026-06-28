@@ -496,9 +496,9 @@
   (function () {
     var banner = document.getElementById('app-banner');
     var closeBtn = document.getElementById('app-banner-close');
-    if (localStorage.getItem('app_banner_master_dismissed')) return;
+    // Banner shows on EVERY load. Close button hides it only until reload
+    // (no localStorage persistence).
     closeBtn.addEventListener('click', function () {
-      localStorage.setItem('app_banner_master_dismissed', '1');
       banner.style.display = 'none';
     });
     setTimeout(function () { banner.style.display = 'block'; }, 1500);
